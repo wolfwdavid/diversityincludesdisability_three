@@ -45,7 +45,9 @@ h4 {
 	line-height: var(--leading-tight);
 	font-weight: 700;
 	text-wrap: balance;
-	color: var(--color-text);
+	/* Inherit the surrounding surface's text colour so headings stay legible on
+	   dark sections (footer, CTA bands) as well as light pages. */
+	color: inherit;
 }
 
 h1 {

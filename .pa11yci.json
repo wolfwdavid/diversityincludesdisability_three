@@ -7,5 +7,12 @@
 			"args": ["--no-sandbox"]
 		}
 	},
-	"urls": ["http://localhost:4173/"]
+	"urls": [
+		"http://localhost:4173/",
+		"http://localhost:4173/about/",
+		"http://localhost:4173/services/",
+		"http://localhost:4173/speaking/",
+		"http://localhost:4173/contact/",
+		"http://localhost:4173/accessibility/"
+	]
 }

@@ -13,7 +13,7 @@ This roadmap rebuilds diversityincludesdisability.org as a WCAG 2.2 AA (aspiring
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation — Scaffold, Deploy Plumbing & Design Tokens** - Live base-path-correct SvelteKit site on GitHub Pages with an enforced AA contrast/focus/motion token substrate and CI a11y gate ✅
-- [ ] **Phase 2: Accessible Layout Shell & Component Kit** - One accessible shell (skip link, landmarks, route-change focus, keyboard nav) plus the reusable a11y component kit every page consumes
+- [x] **Phase 2: Accessible Layout Shell & Component Kit** - One accessible shell (skip link, landmarks, route-change focus, keyboard nav) plus the reusable a11y component kit every page consumes ✅
 - [ ] **Phase 3: Content Data Modules & Core Pages** - Real-content Home, About, Services (four offerings), and Speaking/Portfolio with correct alt text, heading hierarchy, and a repeated booking CTA
 - [ ] **Phase 4: Contact & Accessibility Statement** - Backend-free accessible contact form with announced errors and multiple pathways, plus a dated Accessibility Statement in nav and footer
 - [ ] **Phase 5: Differentiators & Conformance Pass** - Native accessibility preferences panel, plain-language stats, downloadable media kit, and the final automated + manual keyboard/screen-reader audit
@@ -100,7 +100,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation — Scaffold, Deploy Plumbing & Design Tokens | 1/1 | ✅ Complete | 2026-07-04 |
-| 2. Accessible Layout Shell & Component Kit | 0/TBD | Not started | - |
+| 2. Accessible Layout Shell & Component Kit | 1/1 | ✅ Complete | 2026-07-04 |
 | 3. Content Data Modules & Core Pages | 0/TBD | Not started | - |
 | 4. Contact & Accessibility Statement | 0/TBD | Not started | - |
 | 5. Differentiators & Conformance Pass | 0/TBD | Not started | - |

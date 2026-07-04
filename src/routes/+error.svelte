@@ -1,6 +1,6 @@
 <script>
 	import { page } from '$app/state';
-	import { resolve } from '$app/paths';
+	import { base } from '$app/paths';
 </script>
 
 <svelte:head>
@@ -12,7 +12,7 @@
 	<h1>We couldn't find that page.</h1>
 	<p>
 		The page you were looking for may have moved. Head back to the
-		<a href={resolve('/')}>home page</a> to find your way.
+		<a href="{base}/">home page</a> to find your way.
 	</p>
 </section>
 

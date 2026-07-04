@@ -1,0 +1,9 @@
+.svelte-kit/
+build/
+node_modules/
+pnpm-lock.yaml
+package-lock.json
+
+# GSD planning docs (managed by the GSD workflow, not app source)
+.planning/
+CLAUDE.md

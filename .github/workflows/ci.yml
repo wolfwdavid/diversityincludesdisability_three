@@ -1,0 +1,46 @@
+name: CI — quality & accessibility gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify colour contrast (WCAG 2.2 AA)
+        run: node scripts/check-contrast.mjs
+
+      - name: Type & a11y compiler check
+        run: pnpm run check
+
+      - name: Lint (incl. eslint-plugin-svelte a11y)
+        run: pnpm run lint
+
+      - name: Build
+        run: pnpm run build
+
+      - name: Install Playwright browser
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Automated a11y audit (axe-core)
+        run: pnpm run test:a11y

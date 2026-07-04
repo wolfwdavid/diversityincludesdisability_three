@@ -102,13 +102,48 @@ Which phases cover which requirements. Populated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (to be filled by roadmapper) | | |
+| FND-01 | Phase 1 | Pending |
+| FND-02 | Phase 1 | Pending |
+| FND-03 | Phase 1 | Pending |
+| FND-04 | Phase 1 | Pending |
+| FND-05 | Phase 1 | Pending |
+| FND-06 | Phase 1 | Pending |
+| FND-07 | Phase 1 | Pending |
+| FND-08 | Phase 1 | Pending |
+| FND-09 | Phase 1 | Pending |
+| SHELL-01 | Phase 2 | Pending |
+| SHELL-02 | Phase 2 | Pending |
+| SHELL-03 | Phase 2 | Pending |
+| SHELL-04 | Phase 2 | Pending |
+| SHELL-05 | Phase 2 | Pending |
+| SHELL-06 | Phase 2 | Pending |
+| SHELL-07 | Phase 2 | Pending |
+| SHELL-08 | Phase 2 | Pending |
+| PAGE-01 | Phase 3 | Pending |
+| PAGE-02 | Phase 3 | Pending |
+| PAGE-03 | Phase 3 | Pending |
+| PAGE-04 | Phase 3 | Pending |
+| PAGE-05 | Phase 3 | Pending |
+| PAGE-06 | Phase 3 | Pending |
+| PAGE-07 | Phase 3 | Pending |
+| CONV-01 | Phase 4 | Pending |
+| CONV-02 | Phase 4 | Pending |
+| CONV-03 | Phase 4 | Pending |
+| CONV-04 | Phase 4 | Pending |
+| CONV-05 | Phase 4 | Pending |
+| A11Y-01 | Phase 4 | Pending |
+| A11Y-02 | Phase 4 | Pending |
+| DIFF-01 | Phase 5 | Pending |
+| DIFF-02 | Phase 5 | Pending |
+| DIFF-03 | Phase 5 | Pending |
+| VERIF-01 | Phase 5 | Pending |
+| VERIF-02 | Phase 5 | Pending |
 
 **Coverage:**
-- v1 requirements: 32 total
-- Mapped to phases: TBD (roadmapper)
-- Unmapped: TBD
+- v1 requirements: 36 total (note: the earlier "32 total" figure was a miscount — actual REQ-IDs are FND 9 + SHELL 8 + PAGE 7 + CONV 5 + A11Y 2 + DIFF 3 + VERIF 2 = 36)
+- Mapped to phases: 36 / 36 (100%)
+- Unmapped: 0
 
 ---
 *Requirements defined: 2026-07-04*
-*Last updated: 2026-07-04 after initial definition*
+*Last updated: 2026-07-04 after roadmap creation (traceability populated)*

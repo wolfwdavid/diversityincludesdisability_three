@@ -3,6 +3,7 @@
 	import { page } from '$app/state';
 	import { afterNavigate } from '$app/navigation';
 	import { navItems, site } from '$lib/content/site.js';
+	import PreferencesPanel from '$lib/components/a11y/PreferencesPanel.svelte';
 
 	let open = $state(false);
 	/** @type {HTMLButtonElement | undefined} */
@@ -45,35 +46,39 @@
 			<span class="site-header__brand-name">{site.name}</span>
 		</a>
 
-		<button
-			class="site-header__toggle"
-			type="button"
-			aria-expanded={open}
-			aria-controls="primary-navigation"
-			bind:this={toggleEl}
-			onclick={() => (open = !open)}
-		>
-			<svg class="site-header__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-				{#if open}
-					<path
-						d="M6 6l12 12M18 6L6 18"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2.5"
-						stroke-linecap="round"
-					/>
-				{:else}
-					<path
-						d="M3 6h18M3 12h18M3 18h18"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2.5"
-						stroke-linecap="round"
-					/>
-				{/if}
-			</svg>
-			<span>Menu</span>
-		</button>
+		<div class="site-header__tools">
+			<PreferencesPanel />
+
+			<button
+				class="site-header__toggle"
+				type="button"
+				aria-expanded={open}
+				aria-controls="primary-navigation"
+				bind:this={toggleEl}
+				onclick={() => (open = !open)}
+			>
+				<svg class="site-header__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+					{#if open}
+						<path
+							d="M6 6l12 12M18 6L6 18"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2.5"
+							stroke-linecap="round"
+						/>
+					{:else}
+						<path
+							d="M3 6h18M3 12h18M3 18h18"
+							fill="none"
+							stroke="currentColor"
+							stroke-width="2.5"
+							stroke-linecap="round"
+						/>
+					{/if}
+				</svg>
+				<span>Menu</span>
+			</button>
+		</div>
 
 		<nav id="primary-navigation" class="site-header__nav" class:is-open={open} aria-label="Primary">
 			<ul class="site-header__list">
@@ -113,6 +118,9 @@
 	}
 
 	.site-header__brand {
+		display: inline-flex;
+		align-items: center;
+		min-height: var(--target-min);
 		font-family: var(--font-heading);
 		font-weight: 700;
 		font-size: var(--step-1);
@@ -122,6 +130,12 @@
 	}
 	.site-header__brand:hover .site-header__brand-name {
 		color: var(--color-primary);
+	}
+
+	.site-header__tools {
+		display: flex;
+		align-items: center;
+		gap: var(--space-xs);
 	}
 
 	/* Toggle: shown on small screens only */

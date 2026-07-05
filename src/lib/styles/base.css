@@ -154,6 +154,20 @@ select {
 	font-size: 125%;
 }
 
+/* ---- Print: strip site chrome so pages (esp. the one-sheet) print clean --- */
+@media print {
+	.site-header,
+	.site-footer,
+	.skip-link,
+	.no-print {
+		display: none !important;
+	}
+	body {
+		background: #fff;
+		color: #000;
+	}
+}
+
 /* ---- Utilities ---------------------------------------------------- */
 .visually-hidden {
 	position: absolute;

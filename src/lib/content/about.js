@@ -62,6 +62,14 @@ export const engagements = [
 	}
 ];
 
+/** A cited, plain-language framing stat (public source, not fabricated). */
+export const impact = {
+	value: '1 in 4',
+	label: 'U.S. adults lives with a disability',
+	source: 'Centers for Disease Control and Prevention',
+	note: 'Disability touches every community and workplace. Building access in isn’t niche — it’s for everyone, including your future self.'
+};
+
 /** Topics Eman speaks on. */
 export const topics = [
 	'Disability justice and the social model',

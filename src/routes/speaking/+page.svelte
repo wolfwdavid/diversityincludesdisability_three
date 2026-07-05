@@ -1,6 +1,8 @@
 <script>
+	import { base } from '$app/paths';
 	import PageHeader from '$lib/components/ui/PageHeader.svelte';
 	import CtaBand from '$lib/components/content/CtaBand.svelte';
+	import Button from '$lib/components/ui/Button.svelte';
 	import Icon from '$lib/components/ui/Icon.svelte';
 	import { engagements, topics } from '$lib/content/about.js';
 </script>
@@ -17,7 +19,9 @@
 	eyebrow="Speaking & Portfolio"
 	title="Speaking, panels & representation"
 	intro="Eman has trained public officials, testified on transit and access, and spoken on stages and podcasts about disability at the intersection of race, gender, and disability."
-/>
+>
+	<Button href="{base}/speaker-kit/" variant="secondary">View speaker one-sheet</Button>
+</PageHeader>
 
 <section class="section" aria-labelledby="topics-heading">
 	<div class="container">

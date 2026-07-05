@@ -45,6 +45,8 @@ const pairs = [
 	['light: error on error-bg', '#a11a2b', '#fdecee', 4.5, false],
 	['light: success on bg', '#1f6b3a', '#faf7f2', 4.5, false],
 	['light: focus ring vs bg', '#46295f', '#faf7f2', 3.0, false],
+	['light: gold-300 stat on surface-invert', '#e0a83a', '#21132f', 4.5, false],
+	['light: cream text on surface-invert', '#faf7f2', '#21132f', 4.5, false],
 	// ---- DARK ----
 	['dark: text on bg', '#f4eef8', '#180d24', 4.5, true],
 	['dark: text on surface', '#f4eef8', '#21132f', 4.5, true],

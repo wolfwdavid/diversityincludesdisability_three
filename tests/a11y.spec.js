@@ -11,7 +11,8 @@ const routes = [
 	{ path: '/services/', name: 'services' },
 	{ path: '/speaking/', name: 'speaking' },
 	{ path: '/contact/', name: 'contact' },
-	{ path: '/accessibility/', name: 'accessibility' }
+	{ path: '/accessibility/', name: 'accessibility' },
+	{ path: '/speaker-kit/', name: 'speaker-kit' }
 ];
 
 for (const route of routes) {
@@ -62,6 +63,27 @@ test('contact form announces validation errors and moves focus to the summary', 
 	await expect(alert).toBeFocused();
 	// Each error links to its field.
 	await expect(alert.getByRole('link', { name: /enter your name/i })).toBeVisible();
+});
+
+test('accessibility preferences panel applies a theme and Escape closes it', async ({ page }) => {
+	await page.goto('/');
+	const trigger = page.getByRole('button', { name: /accessibility/i });
+	await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+	await trigger.click();
+	await expect(trigger).toHaveAttribute('aria-expanded', 'true');
+
+	// Choosing Dark sets data-theme on <html> and persists.
+	await page.getByRole('radio', { name: 'Dark' }).check();
+	await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+
+	// Escape closes the panel and returns focus to the trigger.
+	await page.keyboard.press('Escape');
+	await expect(trigger).toHaveAttribute('aria-expanded', 'false');
+	await expect(trigger).toBeFocused();
+
+	// Preference survives a reload.
+	await page.reload();
+	await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 });
 
 test('a 404 route renders the accessible error page', async ({ page }) => {

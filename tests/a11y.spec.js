@@ -50,6 +50,20 @@ test('mobile nav toggle is keyboard operable and Escape closes it', async ({ pag
 	await expect(toggle).toBeFocused();
 });
 
+test('contact form announces validation errors and moves focus to the summary', async ({
+	page
+}) => {
+	await page.goto('/contact/');
+	await page.getByRole('button', { name: /send message/i }).click();
+	const alert = page.getByRole('alert');
+	await expect(alert).toBeVisible();
+	await expect(alert).toContainText(/please fix the following/i);
+	// The summary receives focus so screen-reader users hear it immediately.
+	await expect(alert).toBeFocused();
+	// Each error links to its field.
+	await expect(alert.getByRole('link', { name: /enter your name/i })).toBeVisible();
+});
+
 test('a 404 route renders the accessible error page', async ({ page }) => {
 	const response = await page.goto('/this-route-does-not-exist/');
 	expect(response).toBeTruthy();

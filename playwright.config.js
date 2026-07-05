@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const PORT = 4173;
+const PORT = 5290;
 
 export default defineConfig({
 	testDir: './tests',
@@ -17,7 +17,7 @@ export default defineConfig({
 	webServer: {
 		command: `pnpm exec vite preview --port ${PORT} --strictPort`,
 		port: PORT,
-		reuseExistingServer: !process.env.CI,
+		reuseExistingServer: true,
 		timeout: 60_000
 	}
 });

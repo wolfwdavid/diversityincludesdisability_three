@@ -6,6 +6,7 @@
 - **Free port 4173 before each run.** `playwright.config.js` has `reuseExistingServer: !CI`, so a leftover `vite preview` from a killed run gets **reused and serves a STALE build** → tests fail against old markup even after fixes. Kill it first:
   `Get-NetTCPConnection -LocalPort 4173 -State Listen | %{ Stop-Process -Id $_.OwningProcess -Force }`
 - If in doubt, `CI=1 pnpm exec playwright test` forces a fresh server.
+- **Root cause of the long Phase-3 port saga:** a FOREIGN project's `vite preview` (base `/Eman_dashboard`) was squatting 4173 and its auto-incremented neighbours 4188/4199. With `reuseExistingServer:true`, Playwright reused that server and ran my tests against the wrong app (missing title/lang/skip-link → 8 "failures"). Fix: probe first (`curl -s localhost:PORT | grep -i 'Diversity Includes Disability\|base URL of'`) and use a confirmed-free uncommon port. This project pins **5290**. `netstat` and `Get-CimInstance` are BOTH unavailable in this shell — use `curl` to detect what's actually serving a port.
 
 ## Svelte 5 / SvelteKit gotchas hit
 

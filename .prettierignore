@@ -7,3 +7,6 @@ package-lock.json
 # GSD planning docs (managed by the GSD workflow, not app source)
 .planning/
 CLAUDE.md
+
+# Dev notes (not app source)
+tasks/

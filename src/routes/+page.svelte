@@ -4,7 +4,7 @@
 	import Icon from '$lib/components/ui/Icon.svelte';
 	import StatTile from '$lib/components/content/StatTile.svelte';
 	import CtaBand from '$lib/components/content/CtaBand.svelte';
-	import PortraitPlaceholder from '$lib/components/content/PortraitPlaceholder.svelte';
+	import Hero3D from '$lib/components/three/Hero3D.svelte';
 	import { services } from '$lib/content/services.js';
 	import { stats } from '$lib/content/about.js';
 </script>
@@ -33,7 +33,7 @@
 			</div>
 		</div>
 		<div class="hero__media">
-			<PortraitPlaceholder label="Portrait of Eman Rimawi-Doster" />
+			<Hero3D />
 		</div>
 	</div>
 </section>

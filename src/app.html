@@ -6,13 +6,15 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="color-scheme" content="light dark" />
 		<script>
-			// Apply saved accessibility preferences before first paint (no flash).
+			// Apply saved display/accessibility preferences before first paint (no flash).
 			try {
 				var p = JSON.parse(localStorage.getItem('did-prefs') || '{}');
 				var el = document.documentElement;
-				if (p.theme && p.theme !== 'system') el.setAttribute('data-theme', p.theme);
+				var accessible = p.mode === 'accessible';
+				if (accessible) el.setAttribute('data-mode', 'accessible');
+				if (accessible && p.theme && p.theme !== 'system') el.setAttribute('data-theme', p.theme);
 				if (p.textSize && p.textSize !== 'default') el.setAttribute('data-text-size', p.textSize);
-				if (p.motion === 'reduce') el.setAttribute('data-motion', 'reduce');
+				if (p.motion === 'reduce' || accessible) el.setAttribute('data-motion', 'reduce');
 			} catch (e) {}
 		</script>
 		%sveltekit.head%

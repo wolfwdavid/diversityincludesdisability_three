@@ -15,15 +15,37 @@ const routes = [
 	{ path: '/speaker-kit/', name: 'speaker-kit' }
 ];
 
+/**
+ * Force strict accessibility mode before the page loads.
+ * @param {import('@playwright/test').Page} page
+ */
+async function forceAccessibleMode(page) {
+	await page.addInitScript(() => {
+		localStorage.setItem('did-prefs', JSON.stringify({ mode: 'accessible' }));
+	});
+}
+
+// Route audits run in ACCESSIBILITY mode — the mode that promises WCAG 2.2 AA.
 for (const route of routes) {
-	test(`${route.name} has no automatically-detectable a11y violations`, async ({ page }) => {
+	test(`${route.name} (accessible mode) has no a11y violations`, async ({ page }) => {
+		await forceAccessibleMode(page);
 		await page.goto(route.path);
+		await expect(page.locator('html')).toHaveAttribute('data-mode', 'accessible');
 		const results = await new AxeBuilder({ page })
 			.withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
 			.analyze();
 		expect(results.violations).toEqual([]);
 	});
 }
+
+// The default premium experience should also be clean.
+test('home (premium mode) has no a11y violations', async ({ page }) => {
+	await page.goto('/');
+	const results = await new AxeBuilder({ page })
+		.withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+		.analyze();
+	expect(results.violations).toEqual([]);
+});
 
 test('skip link is the first focusable element and targets main', async ({ page }) => {
 	await page.goto('/');
@@ -65,14 +87,21 @@ test('contact form announces validation errors and moves focus to the summary', 
 	await expect(alert.getByRole('link', { name: /enter your name/i })).toBeVisible();
 });
 
-test('accessibility preferences panel applies a theme and Escape closes it', async ({ page }) => {
+test('preferences panel switches to accessibility mode, sets theme, and persists', async ({
+	page
+}) => {
 	await page.goto('/');
+	// Default is premium mode (no data-mode attribute).
+	await expect(page.locator('html')).not.toHaveAttribute('data-mode', 'accessible');
+
 	const trigger = page.getByRole('button', { name: /accessibility/i });
-	await expect(trigger).toHaveAttribute('aria-expanded', 'false');
 	await trigger.click();
 	await expect(trigger).toHaveAttribute('aria-expanded', 'true');
 
-	// Choosing Dark sets data-theme on <html> and persists.
+	// Switch to Accessibility (WCAG AA) mode → data-mode set, theme control appears.
+	await page.getByRole('radio', { name: /Accessibility \(WCAG AA\)/i }).check();
+	await expect(page.locator('html')).toHaveAttribute('data-mode', 'accessible');
+
 	await page.getByRole('radio', { name: 'Dark' }).check();
 	await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 
@@ -81,8 +110,9 @@ test('accessibility preferences panel applies a theme and Escape closes it', asy
 	await expect(trigger).toHaveAttribute('aria-expanded', 'false');
 	await expect(trigger).toBeFocused();
 
-	// Preference survives a reload.
+	// Preferences survive a reload.
 	await page.reload();
+	await expect(page.locator('html')).toHaveAttribute('data-mode', 'accessible');
 	await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 });
 

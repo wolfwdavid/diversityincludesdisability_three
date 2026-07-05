@@ -168,6 +168,42 @@ select {
 	}
 }
 
+/* ---- Premium mode: iridescent atmosphere -------------------------- */
+:root:not([data-mode='accessible']) body {
+	background-color: var(--color-bg);
+	background-image:
+		radial-gradient(48rem 32rem at 78% -8%, rgba(129, 140, 248, 0.22), transparent 60%),
+		radial-gradient(40rem 30rem at 12% 6%, rgba(103, 232, 249, 0.16), transparent 60%),
+		radial-gradient(46rem 34rem at 50% 108%, rgba(240, 171, 252, 0.14), transparent 60%);
+	background-attachment: fixed;
+}
+
+/* Iridescent gradient text (premium only; falls back to solid ink elsewhere) */
+.gradient-text {
+	color: var(--color-primary);
+}
+:root:not([data-mode='accessible']) .gradient-text {
+	/* Keep a real (contrast-passing) color for a11y tooling + non-webkit, while
+	   -webkit-text-fill-color paints the gradient over it. */
+	color: var(--iris-violet);
+	background: var(--gradient-iris);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+/* Glass surface (premium); solid in accessible mode via token */
+.glass {
+	background: var(--color-surface-glass);
+	border: 1px solid var(--color-border);
+	backdrop-filter: blur(12px);
+	-webkit-backdrop-filter: blur(12px);
+}
+:root[data-mode='accessible'] .glass {
+	backdrop-filter: none;
+	-webkit-backdrop-filter: none;
+}
+
 /* ---- Utilities ---------------------------------------------------- */
 .visually-hidden {
 	position: absolute;

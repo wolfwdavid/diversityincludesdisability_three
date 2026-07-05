@@ -1,51 +1,74 @@
 /*
- * Design tokens — two tier.
- *   Tier 1: primitives (raw, theme-independent palette + scales)
- *   Tier 2: semantic roles (what components actually reference)
+ * Design tokens — two DISPLAY MODES on top of the two-tier token system.
  *
- * Themes flip the semantic layer only. Light is the default; dark is applied
- * both by `prefers-color-scheme: dark` AND by an explicit [data-theme] attribute
- * (set by the Phase 5 preferences panel), so user choice can override the system.
+ *   Default (premium)  → :root                    — near-black iridescent /
+ *                                                    holographic, 3D hero on.
+ *   Accessible          → :root[data-mode="accessible"] — strict WCAG 2.2 AA
+ *                                                    (body AAA), solid colours,
+ *                                                    no 3D/iridescence. Supports
+ *                                                    light / dark / high-contrast
+ *                                                    via [data-theme] + system.
  *
- * All text/background pairings are verified to meet WCAG 2.2 AA (>=4.5:1 body,
- * >=3:1 large/UI); body text aims for 7:1 (AAA) where feasible. See
- * scripts/check-contrast.mjs for the automated verification.
+ * The accessible mode is the safety net: everything a text needs to touch is
+ * verified by scripts/check-contrast.mjs. Premium mode keeps text highly
+ * readable (near-white on near-black) but allows decorative glass/gradient
+ * flourishes that aren't held to the strict text-contrast bar.
  */
 
 :root {
 	/* ---- Tier 1: primitive palette ---------------------------------- */
-	/* Plum / purple — disability-community colour, our brand spine */
-	--plum-950: #180d24;
-	--plum-900: #21132f;
-	--plum-800: #301c46;
-	--plum-700: #46295f; /* primary interactive on light */
-	--plum-600: #5a377a;
-	--plum-500: #714a94;
-	--plum-200: #d8c7ea;
-	--plum-100: #ece3f5;
+	/* Teal — accessible-mode brand spine (replaces the old plum) */
+	--teal-950: #032024;
+	--teal-900: #06333a;
+	--teal-800: #084b54;
+	--teal-700: #0b5a62; /* accessible primary on light */
+	--teal-600: #0d6c75;
+	--teal-500: #12838d;
+	--teal-200: #bfe6e9;
+	--teal-100: #e2f3f4;
 
-	/* Gold / amber — warm secondary accent */
+	/* Gold / amber — warm secondary accent (both modes) */
 	--gold-800: #5f3d00;
 	--gold-700: #714900;
-	--gold-600: #855700; /* accent text on light */
+	--gold-600: #855700;
 	--gold-400: #c1841a;
 	--gold-300: #e0a83a;
 	--gold-200: #f2d79a;
 
-	/* Warm neutrals */
+	/* Warm neutrals (accessible light) */
 	--cream-50: #faf7f2;
 	--cream-100: #f3ece1;
 	--cream-200: #e6dccc;
 	--cream-300: #d4c7b3;
 
-	--ink-900: #17121e; /* primary text on light */
+	--ink-900: #17121e;
 	--ink-700: #322b3b;
-	--ink-500: #595162; /* muted text on light (verified >=4.5:1 on cream) */
+	--ink-500: #595162;
 
 	--white: #ffffff;
 
+	/* Premium (iridescent / holographic) primitives */
+	--iris-violet: #a78bfa;
+	--iris-cyan: #67e8f9;
+	--iris-magenta: #f0abfc;
+	--iris-blue: #818cf8;
+	--premium-ink-950: #07070e;
+	--premium-ink-900: #0d0d18;
+	--premium-ink-800: #16162a;
+	--premium-fog-100: #f5f5ff;
+	--premium-fog-300: #c3c3dc;
+	--premium-fog-500: #9a9ac0;
+
+	/* Iridescent gradients (premium decorative) */
+	--gradient-iris: linear-gradient(120deg, #818cf8 0%, #67e8f9 38%, #f0abfc 72%, #a78bfa 100%);
+	--gradient-iris-soft: linear-gradient(
+		135deg,
+		rgba(129, 140, 248, 0.9),
+		rgba(103, 232, 249, 0.9),
+		rgba(240, 171, 252, 0.9)
+	);
+
 	/* ---- Non-colour primitives -------------------------------------- */
-	/* Fluid type scale (clamp: min, preferred, max) */
 	--font-body: 'Atkinson Hyperlegible', system-ui, -apple-system, sans-serif;
 	--font-heading: 'Lexend Variable', 'Lexend', system-ui, sans-serif;
 
@@ -61,7 +84,6 @@
 	--leading-snug: 1.3;
 	--leading-normal: 1.6;
 
-	/* Spacing scale */
 	--space-2xs: 0.25rem;
 	--space-xs: 0.5rem;
 	--space-sm: 0.75rem;
@@ -76,12 +98,11 @@
 	--radius-lg: 1rem;
 	--radius-full: 999px;
 
-	/* Minimum interactive target (WCAG 2.2 Target Size 2.5.8) */
-	--target-min: 2.75rem; /* 44px, exceeds the 24px floor */
+	--target-min: 2.75rem;
 
-	--shadow-sm: 0 1px 2px rgba(23, 18, 30, 0.08);
-	--shadow-md: 0 4px 16px rgba(23, 18, 30, 0.12);
-	--shadow-lg: 0 12px 32px rgba(23, 18, 30, 0.16);
+	--shadow-sm: 0 1px 2px rgba(7, 7, 14, 0.12);
+	--shadow-md: 0 4px 16px rgba(7, 7, 14, 0.18);
+	--shadow-lg: 0 12px 40px rgba(7, 7, 14, 0.3);
 
 	--width-content: 72rem;
 	--width-prose: 42rem;
@@ -90,134 +111,156 @@
 	--motion-med: 250ms;
 	--ease: cubic-bezier(0.2, 0, 0, 1);
 
-	/* ---- Tier 2: semantic roles (LIGHT theme default) --------------- */
+	/* ---- Tier 2: PREMIUM semantic roles (DEFAULT) ------------------- */
+	--color-bg: var(--premium-ink-950);
+	--color-surface: var(--premium-ink-900);
+	--color-surface-alt: var(--premium-ink-800);
+	--color-surface-glass: rgba(255, 255, 255, 0.045);
+	--color-surface-invert: var(--premium-fog-100);
+
+	--color-text: var(--premium-fog-100);
+	--color-text-muted: var(--premium-fog-300);
+	--color-text-invert: var(--premium-ink-950);
+
+	--color-primary: var(--iris-violet);
+	--color-primary-hover: #c4b5fd;
+	--color-on-primary: var(--premium-ink-950);
+
+	--color-accent: var(--iris-cyan);
+	--color-accent-strong: #a5f3fc;
+
+	--color-link: var(--iris-cyan);
+	--color-link-hover: #a5f3fc;
+	--color-link-visited: #d8b4fe;
+
+	--color-border: rgba(255, 255, 255, 0.12);
+	--color-border-strong: rgba(255, 255, 255, 0.28);
+
+	--color-focus: var(--iris-cyan);
+	--color-focus-invert: var(--iris-violet);
+
+	--color-success: #6ee7b7;
+	--color-error: #fca5a5;
+	--color-error-bg: rgba(252, 165, 165, 0.12);
+
+	--gradient-accent: var(--gradient-iris);
+	--is-premium: 1;
+}
+
+/* ================================================================== */
+/*  ACCESSIBLE MODE — strict WCAG 2.2 AA (light default)              */
+/* ================================================================== */
+:root[data-mode='accessible'] {
 	--color-bg: var(--cream-50);
 	--color-surface: var(--white);
 	--color-surface-alt: var(--cream-100);
-	--color-surface-invert: var(--plum-900);
+	--color-surface-glass: var(--white);
+	--color-surface-invert: var(--teal-900);
 
 	--color-text: var(--ink-900);
 	--color-text-muted: var(--ink-500);
 	--color-text-invert: var(--cream-50);
 
-	--color-primary: var(--plum-700);
-	--color-primary-hover: var(--plum-800);
+	--color-primary: var(--teal-700);
+	--color-primary-hover: var(--teal-800);
 	--color-on-primary: var(--white);
 
 	--color-accent: var(--gold-600);
 	--color-accent-strong: var(--gold-700);
 
-	--color-link: var(--plum-700);
-	--color-link-hover: var(--plum-800);
-	--color-link-visited: var(--plum-800);
+	--color-link: var(--teal-700);
+	--color-link-hover: var(--teal-800);
+	--color-link-visited: var(--teal-800);
 
 	--color-border: var(--cream-200);
 	--color-border-strong: var(--cream-300);
 
-	--color-focus: var(--plum-700);
+	--color-focus: var(--teal-700);
 	--color-focus-invert: var(--gold-300);
 
 	--color-success: #1f6b3a;
 	--color-error: #a11a2b;
 	--color-error-bg: #fdecee;
+
+	--gradient-accent: none;
+	--shadow-sm: 0 1px 2px rgba(23, 18, 30, 0.08);
+	--shadow-md: 0 4px 16px rgba(23, 18, 30, 0.12);
+	--shadow-lg: 0 12px 32px rgba(23, 18, 30, 0.16);
+	--is-premium: 0;
 }
 
-/* ---- DARK theme (system preference) -------------------------------- */
+/* Accessible + system dark */
 @media (prefers-color-scheme: dark) {
-	:root:not([data-theme='light']) {
-		--color-bg: var(--plum-950);
-		--color-surface: var(--plum-900);
-		--color-surface-alt: var(--plum-800);
+	:root[data-mode='accessible']:not([data-theme='light']) {
+		--color-bg: var(--teal-950);
+		--color-surface: var(--teal-900);
+		--color-surface-alt: var(--teal-800);
 		--color-surface-invert: var(--cream-100);
-
-		--color-text: #f4eef8;
-		--color-text-muted: #cbbfd9;
-		--color-text-invert: var(--plum-950);
-
-		--color-primary: #d9c2f0;
-		--color-primary-hover: #ece3f5;
-		--color-on-primary: var(--plum-950);
-
+		--color-text: #eef7f8;
+		--color-text-muted: #bcd6d9;
+		--color-text-invert: var(--teal-950);
+		--color-primary: #8fd6dd;
+		--color-primary-hover: #bfe6e9;
+		--color-on-primary: var(--teal-950);
 		--color-accent: var(--gold-300);
 		--color-accent-strong: var(--gold-200);
-
-		--color-link: #d9c2f0;
-		--color-link-hover: #ece3f5;
-		--color-link-visited: #c6a9e4;
-
-		--color-border: #3d2c53;
-		--color-border-strong: #543f6e;
-
+		--color-link: #8fd6dd;
+		--color-link-hover: #bfe6e9;
+		--color-link-visited: #a5dde2;
+		--color-border: #1c4a51;
+		--color-border-strong: #2f666e;
 		--color-focus: var(--gold-300);
-		--color-focus-invert: var(--plum-700);
-
 		--color-success: #7ddba0;
 		--color-error: #ff9aa6;
 		--color-error-bg: #3a1620;
 	}
 }
 
-/* ---- DARK theme (explicit user override via preferences panel) ----- */
-:root[data-theme='dark'] {
-	--color-bg: var(--plum-950);
-	--color-surface: var(--plum-900);
-	--color-surface-alt: var(--plum-800);
+/* Accessible + explicit dark */
+:root[data-mode='accessible'][data-theme='dark'] {
+	--color-bg: var(--teal-950);
+	--color-surface: var(--teal-900);
+	--color-surface-alt: var(--teal-800);
 	--color-surface-invert: var(--cream-100);
-
-	--color-text: #f4eef8;
-	--color-text-muted: #cbbfd9;
-	--color-text-invert: var(--plum-950);
-
-	--color-primary: #d9c2f0;
-	--color-primary-hover: #ece3f5;
-	--color-on-primary: var(--plum-950);
-
+	--color-text: #eef7f8;
+	--color-text-muted: #bcd6d9;
+	--color-text-invert: var(--teal-950);
+	--color-primary: #8fd6dd;
+	--color-primary-hover: #bfe6e9;
+	--color-on-primary: var(--teal-950);
 	--color-accent: var(--gold-300);
 	--color-accent-strong: var(--gold-200);
-
-	--color-link: #d9c2f0;
-	--color-link-hover: #ece3f5;
-	--color-link-visited: #c6a9e4;
-
-	--color-border: #3d2c53;
-	--color-border-strong: #543f6e;
-
+	--color-link: #8fd6dd;
+	--color-link-hover: #bfe6e9;
+	--color-link-visited: #a5dde2;
+	--color-border: #1c4a51;
+	--color-border-strong: #2f666e;
 	--color-focus: var(--gold-300);
-	--color-focus-invert: var(--plum-700);
-
 	--color-success: #7ddba0;
 	--color-error: #ff9aa6;
 	--color-error-bg: #3a1620;
 }
 
-/* ---- HIGH-CONTRAST theme (explicit user override) ------------------ */
-:root[data-theme='high-contrast'] {
+/* Accessible + high contrast */
+:root[data-mode='accessible'][data-theme='high-contrast'] {
 	--color-bg: #000000;
 	--color-surface: #000000;
 	--color-surface-alt: #0a0a0a;
 	--color-surface-invert: #ffffff;
-
 	--color-text: #ffffff;
 	--color-text-muted: #f2f2f2;
 	--color-text-invert: #000000;
-
 	--color-primary: #ffe14d;
 	--color-primary-hover: #fff08a;
 	--color-on-primary: #000000;
-
 	--color-accent: #ffe14d;
 	--color-accent-strong: #fff08a;
-
 	--color-link: #ffe14d;
 	--color-link-hover: #fff08a;
 	--color-link-visited: #ffd1f5;
-
 	--color-border: #ffffff;
 	--color-border-strong: #ffffff;
-
 	--color-focus: #ffe14d;
-	--color-focus-invert: #000000;
-
 	--color-success: #79ff9e;
 	--color-error: #ff8f9c;
 	--color-error-bg: #1a0004;

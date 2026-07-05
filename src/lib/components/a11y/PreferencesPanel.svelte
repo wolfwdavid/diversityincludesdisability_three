@@ -87,21 +87,42 @@
 				These settings layer over your device settings and are saved on this device.
 			</p>
 
-			<fieldset class="prefs__group">
-				<legend>Theme</legend>
-				{#each options.theme as opt (opt.value)}
+			<fieldset class="prefs__group prefs__group--mode">
+				<legend>Display mode</legend>
+				{#each options.mode as opt (opt.value)}
 					<label class="prefs__option">
 						<input
 							type="radio"
-							name="pref-theme"
+							name="pref-mode"
 							value={opt.value}
-							bind:group={prefs.theme}
+							bind:group={prefs.mode}
 							onchange={update}
 						/>
 						<span>{opt.label}</span>
 					</label>
 				{/each}
+				<p class="prefs__mode-note">
+					Accessibility mode meets WCAG&nbsp;2.2&nbsp;AA: solid colours, no 3D or motion.
+				</p>
 			</fieldset>
+
+			{#if prefs.mode === 'accessible'}
+				<fieldset class="prefs__group">
+					<legend>Theme</legend>
+					{#each options.theme as opt (opt.value)}
+						<label class="prefs__option">
+							<input
+								type="radio"
+								name="pref-theme"
+								value={opt.value}
+								bind:group={prefs.theme}
+								onchange={update}
+							/>
+							<span>{opt.label}</span>
+						</label>
+					{/each}
+				</fieldset>
+			{/if}
 
 			<fieldset class="prefs__group">
 				<legend>Text size</legend>
@@ -209,6 +230,18 @@
 		border: 0;
 		padding: 0;
 		margin: 0 0 var(--space-md);
+	}
+	.prefs__group--mode {
+		padding: var(--space-sm) var(--space-md);
+		margin-bottom: var(--space-lg);
+		background: var(--color-surface-alt);
+		border: 1px solid var(--color-border-strong);
+		border-radius: var(--radius-md);
+	}
+	.prefs__mode-note {
+		margin: var(--space-2xs) 0 0;
+		font-size: var(--step--1);
+		color: var(--color-text-muted);
 	}
 	.prefs__group legend {
 		font-weight: 700;

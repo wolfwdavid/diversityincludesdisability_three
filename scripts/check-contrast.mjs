@@ -29,38 +29,48 @@ function ratio(fg, bg) {
 	return (hi + 0.05) / (lo + 0.05);
 }
 
-// Resolved semantic pairs per theme: [label, foreground, background, minRatio, isBody]
+// Resolved semantic pairs. Accessible mode is verified to WCAG 2.2 AA (body
+// AAA). Premium mode's text is also checked (it stays highly readable); its
+// decorative glass/gradient are intentionally not text and not checked.
 const pairs = [
-	// ---- LIGHT ----
-	['light: text on bg', '#17121e', '#faf7f2', 4.5, true],
-	['light: text on surface', '#17121e', '#ffffff', 4.5, true],
-	['light: muted on bg', '#595162', '#faf7f2', 4.5, false],
-	['light: muted on surface-alt', '#595162', '#f3ece1', 4.5, false],
-	['light: link on bg', '#46295f', '#faf7f2', 4.5, false],
-	['light: link on surface', '#46295f', '#ffffff', 4.5, false],
-	['light: accent on bg', '#855700', '#faf7f2', 4.5, false],
-	['light: accent on surface', '#855700', '#ffffff', 4.5, false],
-	['light: on-primary on primary', '#ffffff', '#46295f', 4.5, false],
-	['light: text-invert on surface-invert', '#faf7f2', '#21132f', 4.5, true],
-	['light: error on error-bg', '#a11a2b', '#fdecee', 4.5, false],
-	['light: success on bg', '#1f6b3a', '#faf7f2', 4.5, false],
-	['light: focus ring vs bg', '#46295f', '#faf7f2', 3.0, false],
-	['light: gold-300 stat on surface-invert', '#e0a83a', '#21132f', 4.5, false],
-	['light: cream text on surface-invert', '#faf7f2', '#21132f', 4.5, false],
-	// ---- DARK ----
-	['dark: text on bg', '#f4eef8', '#180d24', 4.5, true],
-	['dark: text on surface', '#f4eef8', '#21132f', 4.5, true],
-	['dark: muted on bg', '#cbbfd9', '#180d24', 4.5, false],
-	['dark: link on bg', '#d9c2f0', '#180d24', 4.5, false],
-	['dark: accent on bg', '#e0a83a', '#180d24', 4.5, false],
-	['dark: on-primary on primary', '#180d24', '#d9c2f0', 4.5, false],
-	['dark: error on bg', '#ff9aa6', '#180d24', 4.5, false],
-	['dark: success on bg', '#7ddba0', '#180d24', 4.5, false],
-	['dark: focus ring vs bg', '#e0a83a', '#180d24', 3.0, false],
-	// ---- HIGH CONTRAST ----
-	['hc: text on bg', '#ffffff', '#000000', 4.5, true],
-	['hc: primary on bg', '#ffe14d', '#000000', 4.5, false],
-	['hc: on-primary on primary', '#000000', '#ffe14d', 4.5, false]
+	// ---- ACCESSIBLE · LIGHT ----
+	['a11y light: text on bg', '#17121e', '#faf7f2', 4.5, true],
+	['a11y light: text on surface', '#17121e', '#ffffff', 4.5, true],
+	['a11y light: muted on bg', '#595162', '#faf7f2', 4.5, false],
+	['a11y light: muted on surface-alt', '#595162', '#f3ece1', 4.5, false],
+	['a11y light: link on bg', '#0b5a62', '#faf7f2', 4.5, false],
+	['a11y light: link on surface', '#0b5a62', '#ffffff', 4.5, false],
+	['a11y light: accent on bg', '#855700', '#faf7f2', 4.5, false],
+	['a11y light: accent on surface', '#855700', '#ffffff', 4.5, false],
+	['a11y light: on-primary on primary', '#ffffff', '#0b5a62', 4.5, false],
+	['a11y light: text-invert on surface-invert', '#faf7f2', '#06333a', 4.5, true],
+	['a11y light: error on error-bg', '#a11a2b', '#fdecee', 4.5, false],
+	['a11y light: success on bg', '#1f6b3a', '#faf7f2', 4.5, false],
+	['a11y light: focus ring vs bg', '#0b5a62', '#faf7f2', 3.0, false],
+	['a11y light: gold-300 stat on surface-invert', '#e0a83a', '#06333a', 4.5, false],
+	['a11y light: cream text on surface-invert', '#faf7f2', '#06333a', 4.5, false],
+	// ---- ACCESSIBLE · DARK ----
+	['a11y dark: text on bg', '#eef7f8', '#032024', 4.5, true],
+	['a11y dark: text on surface', '#eef7f8', '#06333a', 4.5, true],
+	['a11y dark: muted on bg', '#bcd6d9', '#032024', 4.5, false],
+	['a11y dark: link on bg', '#8fd6dd', '#032024', 4.5, false],
+	['a11y dark: accent on bg', '#e0a83a', '#032024', 4.5, false],
+	['a11y dark: on-primary on primary', '#032024', '#8fd6dd', 4.5, false],
+	['a11y dark: error on bg', '#ff9aa6', '#032024', 4.5, false],
+	['a11y dark: success on bg', '#7ddba0', '#032024', 4.5, false],
+	['a11y dark: focus ring vs bg', '#e0a83a', '#032024', 3.0, false],
+	// ---- ACCESSIBLE · HIGH CONTRAST ----
+	['a11y hc: text on bg', '#ffffff', '#000000', 4.5, true],
+	['a11y hc: primary on bg', '#ffe14d', '#000000', 4.5, false],
+	['a11y hc: on-primary on primary', '#000000', '#ffe14d', 4.5, false],
+	// ---- PREMIUM (text readability) ----
+	['premium: text on bg', '#f5f5ff', '#07070e', 4.5, true],
+	['premium: muted on bg', '#c3c3dc', '#07070e', 4.5, false],
+	['premium: text on surface', '#f5f5ff', '#0d0d18', 4.5, true],
+	['premium: link (cyan) on bg', '#67e8f9', '#07070e', 4.5, false],
+	['premium: on-primary on primary', '#07070e', '#a78bfa', 4.5, false],
+	['premium: accent (cyan) on surface', '#67e8f9', '#0d0d18', 4.5, false],
+	['premium: focus (cyan) vs bg', '#67e8f9', '#07070e', 3.0, false]
 ];
 
 let failed = 0;

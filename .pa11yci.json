@@ -8,11 +8,11 @@
 		}
 	},
 	"urls": [
-		"http://localhost:5290/",
-		"http://localhost:5290/about/",
-		"http://localhost:5290/services/",
-		"http://localhost:5290/speaking/",
-		"http://localhost:5290/contact/",
-		"http://localhost:5290/accessibility/"
+		"http://localhost:5533/",
+		"http://localhost:5533/about/",
+		"http://localhost:5533/services/",
+		"http://localhost:5533/speaking/",
+		"http://localhost:5533/contact/",
+		"http://localhost:5533/accessibility/"
 	]
 }

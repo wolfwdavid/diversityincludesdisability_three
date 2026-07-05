@@ -2,7 +2,7 @@
 	import PageHeader from '$lib/components/ui/PageHeader.svelte';
 	import { site } from '$lib/content/site.js';
 
-	const updated = '4 July 2026';
+	const updated = '5 July 2026';
 </script>
 
 <svelte:head>
@@ -28,6 +28,16 @@
 			Diversity Includes Disability exists to make the world more accessible, so this website is
 			held to the same standard we ask of everyone else. We aim to meet — and, where we can, exceed
 			— the <strong>Web Content Accessibility Guidelines (WCAG) 2.2, Level AA</strong>.
+		</p>
+
+		<h2>Two ways to view this site</h2>
+		<p>
+			The site opens in a visual “premium” mode with a 3D hero and richer styling. At any time you
+			can switch to <strong>Accessibility mode</strong> using the “Accessibility” control in the header
+			— it turns off 3D and motion, uses solid high-contrast colours, and is the experience we verify
+			against WCAG 2.2 AA (with light, dark, and high-contrast themes, plus larger-text options). Your
+			choice is remembered on your device, and the site always respects your operating-system reduced-motion
+			setting.
 		</p>
 
 		<h2>What we’ve built in</h2>

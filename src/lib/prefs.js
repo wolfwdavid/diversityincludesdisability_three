@@ -8,12 +8,16 @@
 
 export const STORAGE_KEY = 'did-prefs';
 
-/** @typedef {{ theme: string, textSize: string, motion: string }} Prefs */
+/** @typedef {{ mode: string, theme: string, textSize: string, motion: string }} Prefs */
 
 /** @type {Prefs} */
-export const defaults = { theme: 'system', textSize: 'default', motion: 'system' };
+export const defaults = { mode: 'premium', theme: 'system', textSize: 'default', motion: 'system' };
 
 export const options = {
+	mode: [
+		{ value: 'premium', label: 'Premium (visual, 3D)' },
+		{ value: 'accessible', label: 'Accessibility (WCAG AA)' }
+	],
 	theme: [
 		{ value: 'system', label: 'Match my system' },
 		{ value: 'light', label: 'Light' },
@@ -38,15 +42,32 @@ export const options = {
  */
 export function applyPrefs(prefs) {
 	const el = document.documentElement;
-	if (prefs.theme && prefs.theme !== 'system') el.setAttribute('data-theme', prefs.theme);
+
+	// Display mode: premium (default) vs accessible (strict AA/AAA, no 3D).
+	if (prefs.mode === 'accessible') el.setAttribute('data-mode', 'accessible');
+	else el.removeAttribute('data-mode');
+
+	// Theme (light/dark/high-contrast) only applies inside accessible mode.
+	if (prefs.mode === 'accessible' && prefs.theme && prefs.theme !== 'system')
+		el.setAttribute('data-theme', prefs.theme);
 	else el.removeAttribute('data-theme');
 
 	if (prefs.textSize && prefs.textSize !== 'default')
 		el.setAttribute('data-text-size', prefs.textSize);
 	else el.removeAttribute('data-text-size');
 
-	if (prefs.motion === 'reduce') el.setAttribute('data-motion', 'reduce');
+	// Accessible mode forces reduced motion; otherwise honour the choice.
+	if (prefs.motion === 'reduce' || prefs.mode === 'accessible')
+		el.setAttribute('data-motion', 'reduce');
 	else el.removeAttribute('data-motion');
+}
+
+/**
+ * True when the given prefs should render the premium 3D experience.
+ * @param {Prefs} prefs
+ */
+export function isPremium(prefs) {
+	return prefs.mode !== 'accessible';
 }
 
 /** @returns {Prefs} */

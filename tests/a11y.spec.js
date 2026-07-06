@@ -38,14 +38,20 @@ for (const route of routes) {
 	});
 }
 
-// The default premium experience should also be clean.
-test('home (premium mode) has no a11y violations', async ({ page }) => {
-	await page.goto('/');
-	const results = await new AxeBuilder({ page })
-		.withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
-		.analyze();
-	expect(results.violations).toEqual([]);
-});
+// The default PREMIUM experience must also be clean on EVERY route — not just
+// home. Inner routes carry mode-flipping elements (e.g. /about/'s impact band),
+// so premium-only regressions there previously escaped CI. Audit them all.
+for (const route of routes) {
+	test(`${route.name} (premium mode) has no a11y violations`, async ({ page }) => {
+		await page.goto(route.path);
+		// Premium is the default; assert we are NOT in accessible mode.
+		await expect(page.locator('html')).not.toHaveAttribute('data-mode', 'accessible');
+		const results = await new AxeBuilder({ page })
+			.withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'])
+			.analyze();
+		expect(results.violations).toEqual([]);
+	});
+}
 
 test('skip link is the first focusable element and targets main', async ({ page }) => {
 	await page.goto('/');
@@ -61,8 +67,23 @@ test('mobile nav toggle is keyboard operable and Escape closes it', async ({ pag
 	const toggle = page.getByRole('button', { name: /menu/i });
 	await expect(toggle).toHaveAttribute('aria-expanded', 'false');
 
+	// Deterministic against the Svelte hydration race: a single Enter can land in
+	// the pre-hydration window (before onclick attaches) and be dropped. Re-press
+	// via Enter ONLY while still collapsed, so exactly one press ever "takes" and
+	// the toggle can't oscillate. The assertion below is unchanged.
 	await toggle.focus();
-	await page.keyboard.press('Enter');
+	await expect
+		.poll(
+			async () => {
+				if ((await toggle.getAttribute('aria-expanded')) !== 'true') {
+					await toggle.focus();
+					await page.keyboard.press('Enter');
+				}
+				return toggle.getAttribute('aria-expanded');
+			},
+			{ message: 'Enter should open the mobile nav once hydrated' }
+		)
+		.toBe('true');
 	await expect(toggle).toHaveAttribute('aria-expanded', 'true');
 	const primaryNav = page.getByRole('navigation', { name: 'Primary' });
 	await expect(primaryNav.getByRole('link', { name: 'Services' })).toBeVisible();

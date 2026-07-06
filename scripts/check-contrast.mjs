@@ -47,7 +47,10 @@ const pairs = [
 	['a11y light: error on error-bg', '#a11a2b', '#fdecee', 4.5, false],
 	['a11y light: success on bg', '#1f6b3a', '#faf7f2', 4.5, false],
 	['a11y light: focus ring vs bg', '#0b5a62', '#faf7f2', 3.0, false],
-	['a11y light: gold-300 stat on surface-invert', '#e0a83a', '#06333a', 4.5, false],
+	// Impact stat (.impact__value) rides --color-surface-invert, which flips per
+	// mode/theme. Each variant is checked against ITS OWN band so a mode-flipping
+	// regression (like the premium 1.97:1 gold-on-light bug) cannot pass again.
+	['a11y light: impact-value on surface-invert', '#e0a83a', '#06333a', 4.5, false],
 	['a11y light: cream text on surface-invert', '#faf7f2', '#06333a', 4.5, false],
 	// ---- ACCESSIBLE · DARK ----
 	['a11y dark: text on bg', '#eef7f8', '#032024', 4.5, true],
@@ -59,10 +62,13 @@ const pairs = [
 	['a11y dark: error on bg', '#ff9aa6', '#032024', 4.5, false],
 	['a11y dark: success on bg', '#7ddba0', '#032024', 4.5, false],
 	['a11y dark: focus ring vs bg', '#e0a83a', '#032024', 3.0, false],
+	// surface-invert flips to LIGHT cream in accessible dark → deep gold stat.
+	['a11y dark: impact-value on surface-invert', '#855700', '#f3ece1', 4.5, false],
 	// ---- ACCESSIBLE · HIGH CONTRAST ----
 	['a11y hc: text on bg', '#ffffff', '#000000', 4.5, true],
 	['a11y hc: primary on bg', '#ffe14d', '#000000', 4.5, false],
 	['a11y hc: on-primary on primary', '#000000', '#ffe14d', 4.5, false],
+	['a11y hc: impact-value on surface-invert', '#855700', '#ffffff', 4.5, false],
 	// ---- PREMIUM (text readability) ----
 	['premium: text on bg', '#f5f5ff', '#07070e', 4.5, true],
 	['premium: muted on bg', '#c3c3dc', '#07070e', 4.5, false],
@@ -70,7 +76,10 @@ const pairs = [
 	['premium: link (cyan) on bg', '#67e8f9', '#07070e', 4.5, false],
 	['premium: on-primary on primary', '#07070e', '#a78bfa', 4.5, false],
 	['premium: accent (cyan) on surface', '#67e8f9', '#0d0d18', 4.5, false],
-	['premium: focus (cyan) vs bg', '#67e8f9', '#07070e', 3.0, false]
+	['premium: focus (cyan) vs bg', '#67e8f9', '#07070e', 3.0, false],
+	// surface-invert is the LIGHT fog band in premium → deep gold stat. This is the
+	// pair the old gate missed (it only tested gold against the accessible teal band).
+	['premium: impact-value on surface-invert', '#855700', '#f5f5ff', 4.5, false]
 ];
 
 let failed = 0;

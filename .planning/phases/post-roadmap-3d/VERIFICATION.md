@@ -2,16 +2,31 @@
 scope: post-roadmap commit 66930df — "dual-mode premium 3D experience with accessibility toggle"
 verified: 2026-07-06
 verifier: goal-backward verification (claims NOT trusted)
-status: gaps_found
-score: 4/5 goal-truths verified
+status: resolved
+resolved: 2026-07-06
+score: 5/5 goal-truths verified (both gaps closed)
+resolution_summary: >
+  Both gaps fixed. (1) .impact__value is now driven by a mode-aware semantic
+  token --color-impact-value: deep gold (--gold-600 #855700) on every LIGHT
+  surface-invert band (premium #f5f5ff = 5.77:1, accessible-dark cream #f3ece1 =
+  5.33:1, high-contrast white = 6.25:1) and bright gold (--gold-300) on the
+  accessible-light dark teal band (6.37:1). This also closed a latent failure in
+  accessible dark/high-contrast themes, whose surface-invert also flips light.
+  (2) check-contrast.mjs now checks the impact-value pair against BOTH mode
+  surfaces (34 → 37 pairs; the previously-untested premium pair is included).
+  (3) the axe suite now audits every route in premium mode, not just home.
+  (4) the mobile-nav keyboard test now presses Enter under an expect.poll that
+  only re-presses while collapsed, eliminating the hydration race without
+  weakening the assertion. Gates green: check-contrast 37/37, pnpm check 0/0,
+  lint clean, build clean, test:a11y 19/19 passing 3/3 consecutive runs.
 commit_claims_checked:
   - claim: "contrast 34/34 AA (both modes)"
-    verdict: MISLEADING — script reports 34/34, but the premium-mode impact-band pair is NOT among the 34; that untested pair actually fails (1.97:1). See Gap 1.
+    verdict: WAS MISLEADING — the premium-mode impact-band pair was not among the 34 and failed (1.97:1). RESOLVED — the pair is now included and passes (5.77:1); gate is 37/37 and 'both modes' is literally true.
   - claim: "axe 13/13"
-    verdict: NOT REPRODUCIBLE — full parallel suite passed 13/13 on one run, 12/13 on another (flaky mobile-nav keyboard test, hydration race). See Gap 2.
+    verdict: WAS NOT REPRODUCIBLE (flaky hydration race). RESOLVED — nav test hardened with expect.poll; suite is 19/19 (added premium-mode coverage for all routes) and green on 3/3 consecutive runs.
 gaps:
   - truth: "Existing WCAG 2.2 AA conformance is intact in BOTH modes"
-    status: failed
+    status: resolved
     severity: blocker
     reason: >
       In the DEFAULT premium mode the /about/ impact statistic ("1 in 4") renders
@@ -36,7 +51,7 @@ gaps:
       - "Add the premium-mode impact-band pair to check-contrast.mjs so 'both modes' is literally true"
       - "Extend the axe suite to audit inner routes (esp. /about/) in premium mode, not just home"
   - truth: "The premium/accessibility mode toggle and shell keyboard controls are reliably operable (13/13 green)"
-    status: partial
+    status: resolved
     severity: warning
     reason: >
       The a11y suite is flaky. Full `pnpm test:a11y` (fullyParallel) passed 13/13
@@ -81,9 +96,9 @@ human_verification:
 | 2 | The premium/accessibility mode toggle is fully accessible (keyboard, state, persistence, no flash) | ✅ VERIFIED | Native radios inside `<fieldset><legend>Display mode`; state via native checked; `onchange=update` writes localStorage (`did-prefs`); pre-paint inline script in `app.html` applies `data-mode` before first paint (no flash). Playwright "preferences panel switches to accessibility mode, sets theme, and persists" passed on every run (Esc closes + focus returns + survives reload). |
 | 3 | Reduced motion (OS or in-app) suppresses 3D and motion | ✅ VERIFIED | `Hero3D.shouldRender()` gates on `data-motion=reduce` OR `prefers-reduced-motion` mq, re-syncs via MutationObserver + mq change listener; `base.css` kills all animation/transition for the media query AND `:root[data-motion=reduce]`; the static fallback's spin animation is gated off under reduced motion. |
 | 4 | The 3D canvas is out of the accessibility tree / tab order | ✅ VERIFIED | `Hero3D` wrapper is `aria-hidden="true"`, decorative only, no focusable content; renders a static gradient fallback when 3D is suppressed. |
-| 5 | Existing WCAG 2.2 AA conformance is intact in BOTH modes | ❌ FAILED | Accessible mode: clean (contrast + axe). Premium mode: `/about/` impact stat "1 in 4" = **1.97:1** (gold `#e0a83a` on light `#f5f5ff`), fails WCAG 1.4.3. Found by pa11y-ci, confirmed by calc. Missed by existing gates (see Gap 1). |
+| 5 | Existing WCAG 2.2 AA conformance is intact in BOTH modes | ✅ RESOLVED | Was ❌ (premium `/about/` stat 1.97:1). Now mode-aware `--color-impact-value`: premium `/about/` stat = **5.77:1** (`#855700` on `#f5f5ff`); accessible-light unchanged (6.37:1); accessible-dark cream 5.33:1; HC white 6.25:1. Verified by check-contrast (37/37) and axe on the rendered premium `/about/` DOM (19/19). |
 
-**Score: 4/5 truths verified.**
+**Score: 5/5 truths verified (both gaps resolved 2026-07-06).**
 
 ## Bundle Boundary (the critical check) — PASS
 
@@ -123,9 +138,20 @@ human_verification:
 - Accessible, persistent, no-flash mode toggle (native radios + pre-paint init).
 - Accessible-mode contrast: 34 token pairs pass; axe clean across all 7 routes in accessible mode.
 
+## Resolution (2026-07-06)
+
+Both gaps are closed. Changes:
+
+1. **Mode-aware impact stat** — `tokens.css` gains a semantic `--color-impact-value` defined per mode/theme so it always pairs with the flipping `--color-surface-invert` band: `--gold-600` (#855700) on the light premium/cream/white bands (5.77 / 5.33 / 6.25:1) and `--gold-300` on the accessible-light dark teal band (6.37:1). `about/+page.svelte` `.impact__value` now consumes the token instead of hardcoding `--gold-300`. This also fixed a latent same-class failure in the accessible dark and high-contrast themes (their surface-invert also flips to a light band).
+2. **Contrast gate hole closed** — `check-contrast.mjs` now checks the impact-value pair against BOTH mode surfaces plus the dark/HC variants (34 → **37 pairs**); the premium pair it previously omitted is included and passes.
+3. **Premium axe coverage** — `a11y.spec.js` now audits **every** route in premium mode (not just home), so premium-only regressions on inner pages are caught.
+4. **Flake fixed** — the mobile-nav keyboard test presses Enter inside an `expect.poll` that only re-presses while `aria-expanded` is still `false`, defeating the pre-hydration drop without weakening the final assertion.
+
+Gates (all green): `check-contrast` 37/37 · `pnpm check` 0 errors/0 warnings · `pnpm lint` clean · `pnpm build` clean · `pnpm test:a11y` **19/19 on 3/3 consecutive runs** (the flaky nav test included). pa11y-ci is not part of CI and its bundled Chrome does not launch in this sandbox; the premium `/about/` contrast it originally flagged is instead proven by axe on the rendered DOM and by the computed 5.77:1.
+
 ## Verdict
 
-**gaps_found.** The core purpose of the commit — making premium 3D a *safe, accessibility-first* enhancement — is achieved: the 3D bundle is genuinely code-split out of the default payload, reduced-motion and aria-hidden are correctly wired, and the mode toggle is accessible and persistent. However, the commit's own conformance claims do not fully hold: there is a **real WCAG 2.2 AA contrast failure in the default premium mode** on `/about/` (1.97:1), which both the contrast script and the axe suite miss because of premium-mode coverage gaps, and the "13/13" test claim is **not reproducibly green** due to a flaky hydration-race nav test. Recommend a follow-up to (a) make `.impact__value` mode-aware, (b) close the premium-mode audit coverage gap, and (c) stabilize the nav-toggle test. No fixes applied here — verification only.
+**resolved.** The core purpose of the commit — making premium 3D a *safe, accessibility-first* enhancement — is achieved: the 3D bundle is genuinely code-split out of the default payload, reduced-motion and aria-hidden are correctly wired, and the mode toggle is accessible and persistent. However, the commit's own conformance claims do not fully hold: there is a **real WCAG 2.2 AA contrast failure in the default premium mode** on `/about/` (1.97:1), which both the contrast script and the axe suite miss because of premium-mode coverage gaps, and the "13/13" test claim is **not reproducibly green** due to a flaky hydration-race nav test. Recommend a follow-up to (a) make `.impact__value` mode-aware, (b) close the premium-mode audit coverage gap, and (c) stabilize the nav-toggle test. No fixes applied here — verification only.
 
 ---
 _Verified 2026-07-06 · goal-backward verification · commit claims independently checked, not trusted._

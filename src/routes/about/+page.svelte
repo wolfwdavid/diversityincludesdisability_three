@@ -146,8 +146,10 @@
 		font-family: var(--font-heading);
 		font-size: var(--step-5);
 		font-weight: 700;
-		/* Always-dark band → use the light gold primitive for AA contrast */
-		color: var(--gold-300);
+		/* Mode-aware: the impact band background (--color-surface-invert) flips
+		   light/dark per display mode, so the stat colour flips with it to hold
+		   >=4.5:1 in every mode (see --color-impact-value in tokens.css). */
+		color: var(--color-impact-value);
 		line-height: 1;
 		margin: 0;
 	}

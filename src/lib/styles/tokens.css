@@ -129,6 +129,12 @@
 	--color-accent: var(--iris-cyan);
 	--color-accent-strong: #a5f3fc;
 
+	/* Impact-stat text — pairs with --color-surface-invert, which flips light/dark
+	   per mode. Premium's surface-invert is the LIGHT fog band, so the stat uses a
+	   deep gold (gold-600 #855700 → 5.77:1 on #f5f5ff). Accessible light overrides
+	   to the bright gold on its dark teal band. */
+	--color-impact-value: var(--gold-600);
+
 	--color-link: var(--iris-cyan);
 	--color-link-hover: #a5f3fc;
 	--color-link-visited: #d8b4fe;
@@ -168,6 +174,10 @@
 	--color-accent: var(--gold-600);
 	--color-accent-strong: var(--gold-700);
 
+	/* Accessible light: surface-invert is the DARK teal band → bright gold reads
+	   at 6.37:1. */
+	--color-impact-value: var(--gold-300);
+
 	--color-link: var(--teal-700);
 	--color-link-hover: var(--teal-800);
 	--color-link-visited: var(--teal-800);
@@ -204,6 +214,8 @@
 		--color-on-primary: var(--teal-950);
 		--color-accent: var(--gold-300);
 		--color-accent-strong: var(--gold-200);
+		/* surface-invert flips to LIGHT cream here → deep gold (5.33:1 on #f3ece1). */
+		--color-impact-value: var(--gold-600);
 		--color-link: #8fd6dd;
 		--color-link-hover: #bfe6e9;
 		--color-link-visited: #a5dde2;
@@ -230,6 +242,8 @@
 	--color-on-primary: var(--teal-950);
 	--color-accent: var(--gold-300);
 	--color-accent-strong: var(--gold-200);
+	/* surface-invert flips to LIGHT cream here → deep gold (5.33:1 on #f3ece1). */
+	--color-impact-value: var(--gold-600);
 	--color-link: #8fd6dd;
 	--color-link-hover: #bfe6e9;
 	--color-link-visited: #a5dde2;
@@ -255,6 +269,8 @@
 	--color-on-primary: #000000;
 	--color-accent: #ffe14d;
 	--color-accent-strong: #fff08a;
+	/* surface-invert is WHITE here → deep gold (6.25:1 on #ffffff). */
+	--color-impact-value: var(--gold-600);
 	--color-link: #ffe14d;
 	--color-link-hover: #fff08a;
 	--color-link-visited: #ffd1f5;

@@ -41,7 +41,7 @@
 					Eman Rimawi-Doster is a New York disability rights organizer, trainer, speaker, and model
 					— Black, Palestinian, a woman, and a bilateral amputee. She has advocated for accessible
 					transit, voting rights, and health equity, served as an Access-A-Ride Coordinator and
-					Organizer, and led as Executive Director of the Harlem Independent Living Center.
+					Organizer, and is the founder of Diversity Includes Disability.
 				</p>
 			</section>
 

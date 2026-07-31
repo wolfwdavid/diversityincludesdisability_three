@@ -7,7 +7,7 @@
 /** Plain-language credibility facts, shown as stat tiles. */
 export const stats = [
 	{ value: '5.5 yrs', label: 'Access-A-Ride Coordinator & Organizer', icon: 'transit' },
-	{ value: 'Exec. Director', label: 'Harlem Independent Living Center', icon: 'building' },
+	{ value: 'Founder', label: 'Diversity Includes Disability', icon: 'building' },
 	{
 		value: 'Since 2017',
 		label: 'Disability advocate, NY Lawyers for the Public Interest',
@@ -18,7 +18,7 @@ export const stats = [
 /** Bio paragraphs for the About page (public record). */
 export const bio = [
 	'Eman Rimawi-Doster is a New York native, a disability rights organizer, trainer, speaker, and model. She is Black, Palestinian, a woman, and — since 2014, following an aggressive form of lupus — a bilateral leg amputee. She thinks about diversity in a multifaceted way, because she lives it.',
-	'Since 2017 she has worked as a disability advocate at New York Lawyers for the Public Interest, becoming a forceful, effective voice for accessible transit, voting rights, and health equity. She served as an Access-A-Ride Coordinator and Organizer for over five years and has led as Executive Director of the Harlem Independent Living Center.',
+	'Since 2017 she has worked as a disability advocate at New York Lawyers for the Public Interest, becoming a forceful, effective voice for accessible transit, voting rights, and health equity. She served as an Access-A-Ride Coordinator and Organizer for over five years and is the founder of Diversity Includes Disability.',
 	'Eman is also an artist: a spoken-word poet, a writer at work on a graphic novel, and the founder of an adaptive clothing line she launched after losing her limbs. She has been an educator and youth organizer for community organizations across New York City.',
 	'She has delivered disability-inclusion training for public officials — including the office of Manhattan Borough President Mark Levine — and has testified and spoken widely on what it means to be disabled at the intersection of race, gender, and disability.'
 ];

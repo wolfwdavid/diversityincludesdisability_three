@@ -5,6 +5,7 @@
 	import StatTile from '$lib/components/content/StatTile.svelte';
 	import CtaBand from '$lib/components/content/CtaBand.svelte';
 	import Hero3D from '$lib/components/three/Hero3D.svelte';
+	import NewsletterSignup from '$lib/components/content/NewsletterSignup.svelte';
 	import { services } from '$lib/content/services.js';
 	import { stats } from '$lib/content/about.js';
 </script>
@@ -98,6 +99,13 @@
 				>
 			</p>
 		</div>
+	</div>
+</section>
+
+<!-- Newsletter signup -->
+<section class="section" aria-labelledby="newsletter-heading">
+	<div class="container">
+		<NewsletterSignup />
 	</div>
 </section>
 

@@ -1,6 +1,7 @@
 <script>
 	import { base } from '$app/paths';
 	import { navItems, socials, site } from '$lib/content/site.js';
+	import NewsletterSignup from '$lib/components/content/NewsletterSignup.svelte';
 
 	const year = new Date().getFullYear();
 </script>
@@ -37,6 +38,10 @@
 				{/each}
 			</ul>
 		</div>
+	</div>
+
+	<div class="container site-footer__newsletter">
+		<NewsletterSignup compact />
 	</div>
 
 	<div class="container site-footer__legal">
@@ -105,6 +110,12 @@
 		display: inline-flex;
 		align-items: center;
 		min-height: var(--target-min);
+	}
+
+	.site-footer__newsletter {
+		margin-top: var(--space-xl);
+		padding-top: var(--space-lg);
+		border-top: 1px solid rgba(255, 255, 255, 0.2);
 	}
 
 	.site-footer__legal {

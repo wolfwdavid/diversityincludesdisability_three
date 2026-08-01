@@ -5,6 +5,7 @@
 	import SkipLink from '$lib/components/a11y/SkipLink.svelte';
 	import SiteHeader from '$lib/components/nav/SiteHeader.svelte';
 	import SiteFooter from '$lib/components/nav/SiteFooter.svelte';
+	import ChatWidget from '$lib/components/ChatWidget.svelte';
 
 	let { children } = $props();
 
@@ -29,6 +30,7 @@
 </main>
 
 <SiteFooter />
+<ChatWidget />
 
 <style>
 	main {

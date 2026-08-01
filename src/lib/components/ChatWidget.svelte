@@ -6,7 +6,7 @@
 		{ text: "Hi! I'm the DID grant assistant. Ask me about grants, deadlines, scores, or applications.", from: 'bot' }
 	]);
 	/** @type {HTMLDivElement | undefined} */
-	let messagesEl;
+	let messagesEl = $state();
 
 	const LOCAL = 'http://127.0.0.1:8080';
 	let BASE = LOCAL;

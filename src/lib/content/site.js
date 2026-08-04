@@ -28,7 +28,7 @@ export const navItems = [
 
 /** @type {SocialLink[]} */
 export const socials = [
-	{ label: 'LinkedIn', href: 'https://www.linkedin.com/' },
-	{ label: 'Instagram', href: 'https://www.instagram.com/' },
+	{ label: 'LinkedIn', href: 'https://www.linkedin.com/in/eman-rimawi-doster/' },
+	{ label: 'Instagram', href: 'https://www.instagram.com/emanrimawi/' },
 	{ label: 'Facebook', href: 'https://www.facebook.com/emanrimawiandtheworld/' }
 ];

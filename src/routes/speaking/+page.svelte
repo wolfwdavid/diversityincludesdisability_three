@@ -23,6 +23,19 @@
 	<Button href="{base}/speaker-kit/" variant="secondary">View speaker one-sheet</Button>
 </PageHeader>
 
+<section class="section">
+	<div class="container">
+		<img
+			src="{base}/images/eman-speaking.jpg"
+			alt="Eman Rimawi-Doster speaking at a podium beside an American flag"
+			width="720"
+			height="565"
+			loading="lazy"
+			class="speaking-photo"
+		/>
+	</div>
+</section>
+
 <section class="section" aria-labelledby="topics-heading">
 	<div class="container">
 		<div class="section__head">
@@ -61,6 +74,13 @@
 />
 
 <style>
+	.speaking-photo {
+		width: 100%;
+		max-width: 40rem;
+		height: auto;
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
+	}
 	.section {
 		padding-block: var(--space-3xl);
 	}

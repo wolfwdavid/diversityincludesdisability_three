@@ -1,7 +1,7 @@
 <script>
 	import PageHeader from '$lib/components/ui/PageHeader.svelte';
 	import CtaBand from '$lib/components/content/CtaBand.svelte';
-	import PortraitPlaceholder from '$lib/components/content/PortraitPlaceholder.svelte';
+	import { base } from '$app/paths';
 	import { bio, values, impact } from '$lib/content/about.js';
 </script>
 
@@ -27,7 +27,14 @@
 			{/each}
 		</div>
 		<aside class="bio__media">
-			<PortraitPlaceholder label="Portrait of Eman Rimawi-Doster" />
+			<img
+				src="{base}/images/eman-portrait-full.jpg"
+				alt="Eman Rimawi-Doster smiling outdoors, wearing a black blazer and glasses"
+				width="761"
+				height="961"
+				loading="lazy"
+				class="bio__portrait"
+			/>
 		</aside>
 	</div>
 </section>
@@ -100,6 +107,12 @@
 		max-width: 24rem;
 		width: 100%;
 		justify-self: center;
+	}
+	.bio__portrait {
+		width: 100%;
+		height: auto;
+		border-radius: var(--radius-lg);
+		border: 1px solid var(--color-border);
 	}
 
 	.values {
